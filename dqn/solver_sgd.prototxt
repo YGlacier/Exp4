@@ -1,0 +1,8 @@
+net: "dqn.prototxt"
+solver_type: SGD
+base_lr: 0.001
+lr_policy: "step"
+momentum: 0
+stepsize: 10000
+max_iter: 1000000
+display: 1000

@@ -1,0 +1,19 @@
+実装されているもの
+- DQN（NIPS 2013 Workshopの時点のもの）の学習と評価
+- DQNとモデル学習を組み合わせたエージェントの学習と評価
+
+注意
+- このコードは dqn-in-the-caffe (https://github.com/muupan/dqn-in-the-caffe) をベースにしています．dqn-in-the-caffeにはモデル学習といった論文に無い追加機能は実装されておらずシンプルなコードになっているので，これから改造していくのであればそちらの方が使いやすいかもしれません
+- 自分の他にもDQNの再現を試みている人は多数いるので，他の人のコードを使うことも検討してみてください
+  - Pythonで書かれたdeep_q_rl (https://github.com/spragunr/deep_q_rl) 等があります
+- Deep Q-LearningのGoogleグループの情報はとても参考になるのでぜひチェックしてください https://groups.google.com/forum/#!forum/deep-q-learning
+
+ビルド方法
+- 必要なライブラリ等は基本的にdqn-in-the-caffeと同じです．dqn-in-the-caffeのビルド方法は https://groups.google.com/forum/#!topic/deep-q-learning/AUpIKapHJSo 等を参照してください．
+
+実行方法
+- 実行オプション等はソースコードを読んでください．
+
+藤田
+fujitayasuhirog@gmail.com
+

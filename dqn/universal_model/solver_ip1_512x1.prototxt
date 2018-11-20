@@ -1,0 +1,11 @@
+net: "universal_model/net_ip1_512x1.prototxt"
+solver_type: ADADELTA
+momentum: 0.95
+base_lr: 1.0
+lr_policy: "fixed"
+gamma: 0.1
+stepsize: 10000000
+max_iter: 10000000
+display: 100
+snapshot: 50000
+snapshot_prefix: "universal_model_solver_ip1_512x1"

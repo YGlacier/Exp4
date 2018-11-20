@@ -1,0 +1,110 @@
+layers {
+  name: "frames_input_layer"
+  type: MEMORY_DATA
+  top: "frames"
+  top: "dummy1"
+  memory_data_param {
+    batch_size: 32
+    channels: 4
+    height: 84
+    width: 84
+  }
+}
+layers {
+  name: "target_input_layer"
+  type: MEMORY_DATA
+  top: "target"
+  top: "dummy2"
+  memory_data_param {
+    batch_size: 32
+    channels: 1
+    height: 1
+    width: 1
+  }
+}
+layers {
+  name: "switch_input_layer"
+  type: MEMORY_DATA
+  top: "switch"
+  top: "dummy3"
+  memory_data_param {
+    batch_size: 32
+    channels: 1
+    height: 1
+    width: 1
+  }
+}
+layers {
+  name: "silence_layer"
+  type: SILENCE
+  bottom: "dummy1"
+  bottom: "dummy2"
+  bottom: "dummy3"
+}
+layers {
+  name: "ip2_layer"
+  type: INNER_PRODUCT
+  bottom: "frames"
+  top: "ip2"
+  inner_product_param {
+    num_output: 18
+    weight_filler {
+      type: "constant"
+      value: 0
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layers {
+  name: "slice_layer"
+  type: SLICE
+  bottom: "ip2"
+  top: "q0"
+  top: "q1"
+  top: "q2"
+  top: "q3"
+  top: "q4"
+  top: "q5"
+  top: "q6"
+  top: "q7"
+  top: "q8"
+  top: "q9"
+  top: "q10"
+  top: "q11"
+  top: "q12"
+  top: "q13"
+  top: "q14"
+  top: "q15"
+  top: "q16"
+  top: "q17"
+  slice_param {
+    slice_dim: 1
+    slice_point: 1
+    slice_point: 2
+    slice_point: 3
+    slice_point: 4
+    slice_point: 5
+    slice_point: 6
+    slice_point: 7
+    slice_point: 8
+    slice_point: 9
+    slice_point: 10
+    slice_point: 11
+    slice_point: 12
+    slice_point: 13
+    slice_point: 14
+    slice_point: 15
+    slice_point: 16
+    slice_point: 17
+  }
+}
+layers {
+  name: "loss"
+  type: EUCLIDEAN_LOSS
+  bottom: "q0"
+  bottom: "target"
+  top: "loss"
+}

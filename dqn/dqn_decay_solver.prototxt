@@ -1,0 +1,11 @@
+net: "dqn_decay.prototxt"
+solver_type: ADADELTA
+momentum: 0.95
+base_lr: 0.2
+lr_policy: "fixed"
+stepsize: 10000000
+max_iter: 10000000
+display: 100
+snapshot: 50000
+snapshot_prefix: "dqn"
+weight_decay: 0.0005
