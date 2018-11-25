@@ -3,6 +3,7 @@ import chainer.functions as F
 import chainer.links as L
 import numpy as np
 import chainerrl
+from chainer import cuda 
 
 class QFunction(chainer.Chain):
     def __init__(self,input_size=128,output_size=1,hidden_layer_size=256):

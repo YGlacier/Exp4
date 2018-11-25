@@ -4,7 +4,7 @@ import model
 import chainer
 import chainerrl
 import os.path
-
+from chainer import cuda
 
 env = gym.make('SpaceInvaders-ram-v0')
 observation=env.reset()
@@ -15,7 +15,9 @@ input_size=env.observation_space.shape[0]
 
 q_func_name="QFunction/qfunc.model"
 q_func=model.QFunction(input_size,output_size,256)
-#print(os.path.isfile(q_func_name))
+#cuda.get_device(0).use()
+#q_func.to_gpu(0)
+
 if(os.path.isfile(q_func_name)):
     q_func.load_model(q_func_name)
 optimizer=chainer.optimizers.Adam(eps=1e-2)
@@ -29,7 +31,7 @@ phi=lambda x:x.astype(np.float32,copy=False)
 agent=chainerrl.agents.DQN(q_func,optimizer,replay_buffer,gamma,explorer,replay_start_size=500,phi=phi)
 
 epoch_num=100
-epoch_max_length=10000
+epoch_max_length=100000
 reward_list_name="data/reward.txt"
 if(os.path.isfile(reward_list_name)):
     reward_list=np.loadtxt(reward_list_name)
@@ -47,26 +49,27 @@ if(os.path.isfile(epoch_log_name)):
 else:
     total_epoch=0
 
-for epoch in range(epoch_num):
+#for epoch in range(epoch_num):
+while True:
     observation=env.reset()
     reward=0
     total_reward=0
     done=False
     for _ in range(epoch_max_length):
-        env.render()
+        #env.render()
         action=agent.act_and_train(observation,reward)
         observation,reward,done,info=env.step(action)
         total_reward+=reward
         if done:
             break
     total_epoch+=1
-    print("Epoch:",total_epoch," Reward=", total_reward)
     agent.stop_episode_and_train(observation,reward,done)
     q_func.save_model(q_func_name)
     agent.save(agent_path)
     reward_list=np.append(reward_list,[total_reward])
     np.savetxt(reward_list_name,reward_list)
     np.savetxt(epoch_log_name,[total_epoch])
+    print("Epoch:",total_epoch," Reward=", total_reward)
 
 env.close()
 
