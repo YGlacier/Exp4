@@ -23,7 +23,7 @@ if(os.path.isfile(q_func_name)):
 optimizer=chainer.optimizers.Adam(eps=1e-2)
 optimizer.setup(q_func)
 
-gamma = 0.95
+gamma = 0.99
 explorer=chainerrl.explorers.ConstantEpsilonGreedy(epsilon=0.3,random_action_func=env.action_space.sample)
 replay_buffer=chainerrl.replay_buffer.ReplayBuffer(capacity=10**6)
 phi=lambda x:x.astype(np.float32,copy=False)
@@ -48,6 +48,10 @@ if(os.path.isfile(epoch_log_name)):
     print(total_epoch)
 else:
     total_epoch=0
+
+agent.gamma=0.99
+explorer.epsilon=0.1
+agent.episodic_update=True
 
 #for epoch in range(epoch_num):
 while True:
