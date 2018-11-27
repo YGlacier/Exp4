@@ -52,6 +52,7 @@ else:
 agent.gamma=0.99
 explorer.epsilon=0.5
 agent.episodic_update=True
+death_penalty=200
 
 #for epoch in range(epoch_num):
 while True:
@@ -59,11 +60,15 @@ while True:
     reward=0
     total_reward=0
     done=False
+    life=3
     for _ in range(epoch_max_length):
         #env.render()
         action=agent.act_and_train(observation,reward)
         observation,reward,done,info=env.step(action)
         total_reward+=reward
+        if info["ale.lives"] < life:
+            reward-=death_penalty
+            life=info["ale.lives"]
         if done:
             break
     total_epoch+=1
