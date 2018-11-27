@@ -50,7 +50,7 @@ else:
     total_epoch=0
 
 agent.gamma=0.99
-explorer.epsilon=0.1
+explorer.epsilon=0.5
 agent.episodic_update=True
 
 #for epoch in range(epoch_num):
